@@ -1,0 +1,46 @@
+  <h2>Meine Rezepte</h2>
+  <div>
+      <button type="button" class="new-dish-add" (click)="newDish()" class="btn btn-default">New DIsh</button>
+      <div *ngIf="added" class="animate-if">
+        <form>
+          <label>Name: 
+            <input #newDishName type="text" (keyup.enter)="newDishName.value=''"/>
+          </label>
+          <label>Ingredients: 
+            <input #dishIngredient type="text" (keyup.enter)="dishIngredient.value=''"/>
+            <button type="button" class="btn btn-default" (click)="addNewIngredient(dishIngredient.value); dishIngredient.value=''">
+              <span class="glyphicon glyphicon-plus-sign"></span>
+            </button>
+          </label>
+          <ul>
+            <li *ngFor="let ingredient of _ingredients">
+              <span>{{ingredient}}</span>
+            </li>
+          </ul>
+          <button type="button" (click)="newDishSave(newDishName.value); newDishName.value=''">Save</button>
+        </form>
+      </div>
+  </div> 
+  <div>
+   <!-- <input #dishName (keyup.enter)="add(dishName.value)" (blur)="add(dishName.value); dishName.value=''"/>
+    <button (click)="add(dishName.value); dishName.value=''" class="btn btn-default">
+      <span class="glyphicon glyphicon-plus-sign"></span>
+    </button>-->
+    <button (click)="edit()" class="btn btn-default">edit</button>
+    <button (click)="addToShoppingList()" class="btn btn-default">Add To The List</button>
+    <ul>
+      <li *ngFor="let dish of dishes">
+        <span>{{dish.name}}</span>
+        <input type="checkbox" [(ngModel)]="dish.add" />
+         <button type="button" class="delete btn btn-default" (click)="delete(dish)">
+           <span class="glyphicon glyphicon-minus-sign"></span>
+         </button>
+      </li>
+    </ul>
+  </div>
+  <!--<div *ngIf="selectedDish">
+  <h2>
+    {{selectedDish.name | uppercase}} is my rezept
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>-->
