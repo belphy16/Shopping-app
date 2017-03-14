@@ -45,7 +45,13 @@ export class DishService {
             else countedIngredients[x]=1;
         });
         
-        return Promise.resolve(Object.keys(countedIngredients).map(key => `${countedIngredients[key]}x ${key}`));
+        return Promise.resolve(Object.keys(countedIngredients)
+        .sort(function(a,b){
+            let word1 = a.toLowerCase(), 
+            word2 = b.toLowerCase();
+            return word1 > word2 ? 1 : word1 < word2 ? -1 : 0;
+        })
+        .map(key => `${countedIngredients[key]}x ${key}`));
     }
     createNewIngredients(ingredient: string): string[] {
         this._ingredients.push(ingredient);
