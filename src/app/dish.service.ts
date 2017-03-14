@@ -29,25 +29,33 @@ export class DishService {
         localStorage.setItem('Dishes', JSON.stringify(this.dishes)); 
         return Promise.resolve(this.dishes);
     } 
-    getIngredients(): Promise<Array<String>> {
+    getIngredients(): string[] {
         let allIngredients = [];
         this.dishes
             .filter(dish => dish.add)
             .forEach(dish => {
                 allIngredients = allIngredients.concat(dish.ingredients);
             });
-        return Promise.resolve(allIngredients);
+        return allIngredients;
+    }
+    getIngredientsCounted():Promise<string[]> {
+        var countedIngredients = {};
+        this.getIngredients().forEach(x => {
+            if(countedIngredients[x]) countedIngredients[x]++;
+            else countedIngredients[x]=1;
+        });
+        
+        return Promise.resolve(Object.keys(countedIngredients).map(key => `${countedIngredients[key]}x ${key}`));
     }
     createNewIngredients(ingredient: string): string[] {
         this._ingredients.push(ingredient);
         return this._ingredients;
-       /* let dish = this.dishes.find(dish => name == dish.name);
-        dish.ingredients.push(ingredient);
-        return Promise.resolve(dish);*/
-        /*return Promise.resolve(this.dishes.find(dish => {
-            name == dish.name;
-            dish.ingredients.push(ingredient);
-        }));*/
+    }
+    selectAllDishes():void {
+        this.dishes.forEach(dish => {dish.add = true;})
+    }
+    unselectAllDishes():void {
+        this.dishes.forEach(dish => {dish.add = false;})
     }
     /*getDishes(): Promise<Dish[]> {
         return this.http.get(this.dishesUrl)

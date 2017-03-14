@@ -1,13 +1,13 @@
   <h2>Meine Rezepte</h2>
   <div>
-      <button type="button" class="new-dish-add" (click)="newDish()" class="btn btn-default">New DIsh</button>
+      <button type="button" class="new-dish-add" (click)="newDish()" class="btn btn-default">New Dish</button>
       <div *ngIf="added" class="animate-if">
         <form>
           <label>Name: 
             <input #newDishName type="text" (keyup.enter)="newDishName.value=''"/>
           </label>
           <label>Ingredients: 
-            <input #dishIngredient type="text" (keyup.enter)="dishIngredient.value=''"/>
+            <input #dishIngredient type="text" (keyup.enter)="addNewIngredient(dishIngredient.value); dishIngredient.value=''"/>
             <button type="button" class="btn btn-default" (click)="addNewIngredient(dishIngredient.value); dishIngredient.value=''">
               <span class="glyphicon glyphicon-plus-sign"></span>
             </button>
@@ -28,13 +28,15 @@
     </button>-->
     <button (click)="edit()" class="btn btn-default">edit</button>
     <button (click)="addToShoppingList()" class="btn btn-default">Add To The List</button>
+    <button (click)="dishService.selectAllDishes()" class="btn btn-default">Select all</button>
+    <button (click)="dishService.unselectAllDishes()" class="btn btn-default">Unselect all</button>
     <ul>
       <li *ngFor="let dish of dishes">
         <span>{{dish.name}}</span>
         <input type="checkbox" [(ngModel)]="dish.add" />
-         <button type="button" class="delete btn btn-default" (click)="delete(dish)">
+         <!--<button type="button" class="delete btn btn-default" (click)="delete(dish)">
            <span class="glyphicon glyphicon-minus-sign"></span>
-         </button>
+         </button>-->
       </li>
     </ul>
   </div>
