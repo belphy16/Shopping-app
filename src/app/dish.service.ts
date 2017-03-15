@@ -10,6 +10,8 @@ export class DishService {
     private headers = new Headers({'Content-Type': 'application/json'});
     private dishes = JSON.parse(localStorage.getItem('Dishes'));
     private _ingredients = [];
+    private selectFunction = "Select all";
+
     constructor(private http: Http) {
     }
     getDishes(): Promise<Array<Dish>> {
@@ -28,7 +30,17 @@ export class DishService {
         this.dishes = this.dishes.filter(item => item.name != name);
         localStorage.setItem('Dishes', JSON.stringify(this.dishes)); 
         return Promise.resolve(this.dishes);
-    } 
+    }
+    updateDish(name: string, newDish: Dish): Promise<Dish> {
+        console.log(this.dishes);
+        let index = this.dishes.findIndex(dish => name == dish.name);
+        console.log(index, name);
+        if (index != -1) {
+            this.dishes[index] = newDish;
+            localStorage.setItem('Dishes', JSON.stringify(this.dishes));
+        } 
+        return Promise.resolve(newDish);
+    }
     getIngredients(): string[] {
         let allIngredients = [];
         this.dishes
@@ -47,8 +59,7 @@ export class DishService {
         
         return Promise.resolve(Object.keys(countedIngredients)
         .sort(function(a,b){
-            let word1 = a.toLowerCase(), 
-            word2 = b.toLowerCase();
+            let word1 = a.toLowerCase(), word2 = b.toLowerCase();
             return word1 > word2 ? 1 : word1 < word2 ? -1 : 0;
         })
         .map(key => `${countedIngredients[key]}x ${key}`));
@@ -57,11 +68,25 @@ export class DishService {
         this._ingredients.push(ingredient);
         return this._ingredients;
     }
-    selectAllDishes():void {
-        this.dishes.forEach(dish => {dish.add = true;})
+    toggleSelect():void {
+        if (this.dishes.some( x => !x.add )) {
+            //select all
+            this.selectFunction = "Unselect all";
+            this.dishes.forEach(dish => {dish.add = true;})
+        } else {
+            //unselect all
+            this.selectFunction = "Select all";
+            this.dishes.forEach(dish => {dish.add = false;})
+        }
     }
-    unselectAllDishes():void {
-        this.dishes.forEach(dish => {dish.add = false;})
+    toggleSelectCheck():void {
+        if (this.dishes.some( x => x.add )) {
+            //select all
+            this.selectFunction = "Unselect all";
+        } else {
+            //unselect all
+            this.selectFunction = "Select all";
+        }
     }
     /*getDishes(): Promise<Dish[]> {
         return this.http.get(this.dishesUrl)

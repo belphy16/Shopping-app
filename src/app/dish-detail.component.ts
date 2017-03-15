@@ -11,9 +11,15 @@ import {DishService} from './dish.service';
     selector: 'dish-detail',
     template: `
         <div *ngIf="dish">
-            <h2>{{dish.name}} zutaten!</h2>
+            <label>name: </label>
+            <input [(ngModel)]="dish.name" />
             <div>
-                <label>Zutaten: </label>{{dish.ingredients }}
+                <label>Zutaten: </label>
+                    <ul>
+                        <li *ngFor="let ingredient of dish.ingredients">                        
+                            <input [(ngModel)]="ingredient.value"/>
+                        </li>
+                    </ul>
             </div>
             <button (click)="save()">Save</button>
             <button (click)="goBack()">Back</button>
@@ -22,7 +28,8 @@ import {DishService} from './dish.service';
 })
 
 export class DishDetailComponent implements OnInit{
-    dish: Dish;
+    dish: any;
+    private _ingredients = []
 
     constructor(
         private dishService: DishService,
@@ -33,14 +40,22 @@ export class DishDetailComponent implements OnInit{
     ngOnInit(): void {
         this.route.params
         .switchMap((params: Params) => this.dishService.getDish(params['name']))
-        .subscribe(dish => this.dish = dish);
+        .subscribe(dish => { 
+            this.dish = {
+                name: dish.name,
+                ingredients: dish.ingredients.map(item => ({value: item}))
+            };
+        });
     }
-
     goBack(): void {
         this.location.back();
-    }/*
+    }
     save():void {
-      this.dishService.update(this.dish)
-        .then(() => this.goBack());
-  }*/
+        this.dishService.updateDish(this.dish.name, {
+            name: this.dish.name,
+            ingredients: this.dish.ingredients.map(item => item.value),
+            add: false
+        }); 
+        this.goBack();
+  }
 }

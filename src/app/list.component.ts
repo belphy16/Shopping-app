@@ -25,7 +25,7 @@ export class ListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.getDishes())
+        console.log('------------ngOnInit----------------');
         this.getDishes();
     }    
 }
