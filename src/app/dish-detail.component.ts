@@ -16,11 +16,18 @@ import {DishService} from './dish.service';
             <div>
                 <label>Zutaten: </label>
                     <ul>
-                        <li *ngFor="let ingredient of dish.ingredients">                        
+                        <li *ngFor="let ingredient of dish.ingredients; trackBy: trackByFn" >                        
                             <input [(ngModel)]="ingredient.value"/>
+                            <button type="button" class="delete btn btn-default" (click)="deleteIngredient(ingredient)">
+                                <span class="glyphicon glyphicon-minus-sign"></span>
+                            </button>
                         </li>
                     </ul>
             </div>
+            <input #dishIngredient type="text" (keyup.enter)="addNewIngredient(dishIngredient.value); dishIngredient.value=''"/>
+            <button type="button" class="btn btn-default" (click)="addNewIngredient(dishIngredient.value); dishIngredient.value=''">
+              <span class="glyphicon glyphicon-plus-sign"></span>
+            </button>
             <button (click)="save()">Save</button>
             <button (click)="goBack()">Back</button>
         </div>
@@ -29,7 +36,6 @@ import {DishService} from './dish.service';
 
 export class DishDetailComponent implements OnInit{
     dish: any;
-    private _ingredients = []
 
     constructor(
         private dishService: DishService,
@@ -47,15 +53,27 @@ export class DishDetailComponent implements OnInit{
             };
         });
     }
+    addNewIngredient(dishIngredient: string):void {
+        if(!dishIngredient) {return;};
+        this.dish.ingredients.push({value: dishIngredient});
+    }
+    deleteIngredient(name: string, ingredient: string): any {
+       this.dishService
+       .deleteIngredient(name ,ingredient)
+       
+    }
     goBack(): void {
         this.location.back();
     }
     save():void {
         this.dishService.updateDish(this.dish.name, {
-            name: this.dish.name,
+            name: this.dish.name, 
             ingredients: this.dish.ingredients.map(item => item.value),
             add: false
-        }); 
+        });
         this.goBack();
+  }
+  trackByFn(index: number, ingredient: any):string {      
+      return ingredient.value;
   }
 }

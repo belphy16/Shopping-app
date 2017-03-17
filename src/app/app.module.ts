@@ -1,5 +1,6 @@
+import {OnsenModule} from 'angular2-onsenui';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -25,13 +26,15 @@ import {DishSearchComponent} from'./dish-search.component';
     DishSearchComponent
   ],
   imports: [
+    OnsenModule,
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpModule
   ],
   providers: [DishService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
 

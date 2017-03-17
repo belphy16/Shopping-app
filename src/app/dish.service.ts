@@ -31,10 +31,18 @@ export class DishService {
         localStorage.setItem('Dishes', JSON.stringify(this.dishes)); 
         return Promise.resolve(this.dishes);
     }
-    updateDish(name: string, newDish: Dish): Promise<Dish> {
-        console.log(this.dishes);
+    deleteIngredient(name: string, ingredient: string): Promise<Array<Dish>> {
+        let _dish = this.dishes.find(item => item.name == name);
+        _dish.ingredients = _dish.ingredients.filter(item => item != ingredient)
         let index = this.dishes.findIndex(dish => name == dish.name);
-        console.log(index, name);
+        if (index != -1) {
+            this.dishes[index] = _dish;
+            localStorage.setItem('Dishes', JSON.stringify(this.dishes));            
+        } 
+        return Promise.resolve(this.dishes);
+    }
+    updateDish(name: string, newDish: Dish): Promise<Dish> {
+        let index = this.dishes.findIndex(dish => name == dish.name);
         if (index != -1) {
             this.dishes[index] = newDish;
             localStorage.setItem('Dishes', JSON.stringify(this.dishes));
