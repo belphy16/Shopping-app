@@ -1,6 +1,6 @@
     <h3>Lieblingrezepte</h3>
     <div class="grid grid-pad">
-      <a *ngFor="let dish of dishes" [routerLink]="['/detail', dish.name]" class="col-1-4">
+      <a *ngFor="let dish of dishService.getDishes()" [routerLink]="['/detail', dish.name]" class="">
         <div>
           <h4>{{dish.name}}</h4>
         </div>

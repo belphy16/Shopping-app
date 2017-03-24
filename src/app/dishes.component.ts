@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import {Dish} from './dish';
 import {DishService} from './dish.service';
+import { TSMap } from 'typescript-map';
 
 import { Observable }        from 'rxjs/Observable';
 import { Subject }           from 'rxjs/Subject';
@@ -20,49 +21,49 @@ import 'rxjs/add/operator/distinctUntilChanged';
   //styleUrls: ['./rezepte.component.css'],
 })
 export class DishesComponent implements OnInit {
-  dishes: Dish[];
-  selectedDish: Dish;
+  dishes: Array<Dish>;
+  selectedDish: string;
   private searchTerms = new Subject<string>();
   private added = false;
-  private _ingredients = [];
+  private dishName = '';
+  private ingredient = '';
 
   constructor(
-      private router: Router,
-      private dishService: DishService) {}
+    private router: Router,
+    private dishService: DishService) { }
 
-  getDishes():void {
-    this.dishService
-      .getDishes()
-      .then(dishes => this.dishes = dishes);
+  getDishes(): void {
+    this.dishes = this.dishService.getDishes();
   }
-  ngOnInit():void {
+  ngOnInit(): void {
     this.getDishes();
   }
   newDish(): void {
     this.added = !this.added;
   }
-  add(name: string): void {
-       name = name.trim();
-       if(!name) {return;}
-       this.dishService.create(name, this._ingredients);
-   }
-   delete(dish: Dish): void {
-       this.dishService
-       .delete(dish.name)
-       .then(() => {
-           this.dishes = this.dishes.filter(d => d !== dish);
-           if(this.selectedDish === dish) {this.selectedDish = null;}
-        });
-    }
-  newDishSave(name: string, ingredient: string): void {
-    this.added = false;
-    this.add(name);
-    this._ingredients = [];
-
+  log(x: any): void {
+    console.log(x);
   }
-  addNewIngredient(dishIngredient: string):void {
-    if(!dishIngredient) {return;};
-    this._ingredients.push(dishIngredient);
+  add(name: string): void {
+    name = name.trim();
+    if (name) {
+      this.dishService.add(name);
+    }
+  }
+  delete(name: string): void {
+    this.dishService.delete(name);
+  }
+  addIngredient(dishName: string, ingredient: string): void {
+      console.log(dishName, ingredient);
+    if (dishName && ingredient) {
+      this.dishService.addIngredient(dishName, ingredient);
+      console.log(this.dishService.getDishes());
+    }
+  }
+  deleteIngredient(dishName: string, ingredient: string): void {
+    if (dishName && ingredient) {
+      this.dishService.deleteIngredient(dishName, ingredient);
+    }
   }
   /*
   gotoDetail(): void {
@@ -71,7 +72,7 @@ export class DishesComponent implements OnInit {
   add(name: string): void {
        name = name.trim();
        if(!name) {return;}
-       this.dishService.create(name)
+       this.dishService.update(name)
        .then(dish => {
            this.dishes.push(dish);
            this.selectedDish = null;

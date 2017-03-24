@@ -1,44 +1,49 @@
+<ons-page>
   <h2>Meine Rezepte</h2>
   <div>
-      <button type="button" class="new-dish-add" (click)="newDish()" class="btn btn-default">New Dish</button>
+      <ons-button type="button" class="new-dish-add" (click)="newDish()" class="">New Dish</ons-button>
       <div *ngIf="added" class="animate-if">
         <form>
-          <label>Name: 
-            <input #newDishName type="text" (keyup.enter)="newDishName.value=''"/>
-          </label>
-          <label>Ingredients: 
-            <input #dishIngredient type="text" (keyup.enter)="addNewIngredient(dishIngredient.value); dishIngredient.value=''"/>
-            <button type="button" class="btn btn-default" (click)="addNewIngredient(dishIngredient.value); dishIngredient.value=''">
-              <span class="glyphicon glyphicon-plus-sign"></span>
-            </button>
-          </label>
-          <ul>
-            <li *ngFor="let ingredient of _ingredients">
+          <p>
+            <label>Name:</label>
+            <ons-input type="text" (keyup.enter)="newDishName.name=''" placeholder="Type here" [(value)]="dishName" (input)="dishName = $event.target.value"></ons-input>
+            <label>Ingredients:</label>
+            <ons-input type="text" (keyup.enter)="addIngredient(dishName, ingredient)" placeholder="Type here" [(value)]="ingredient" (input)="ingredient = $event.target.value; "></ons-input>
+            <ons-button type="button" (click)="addIngredient(dishName, ingredient)">+</ons-button>
+            <ons-button type="button" (click)="add(dishName)">Save</ons-button>
+          </p>
+          <ons-list>
+            <ons-list-item *ngFor="let ingredient of _ingredients">
               <span>{{ingredient}}</span>
-            </li>
-          </ul>
-          <button type="button" (click)="newDishSave(newDishName.value); newDishName.value=''">Save</button>
+            </ons-list-item>
+          </ons-list>
         </form>
       </div>
   </div> 
   <div>
-   <!-- <input #dishName (keyup.enter)="add(dishName.value)" (blur)="add(dishName.value); dishName.value=''"/>
-    <button (click)="add(dishName.value); dishName.value=''" class="btn btn-default">
+   <!-- <input #dishName (keyup.enter)="add(dishName.name)" (blur)="add(dishName.name); dishName.name=''"/>
+    <button (click)="add(dishName.name); dishName.name=''" class="btn btn-default">
       <span class="glyphicon glyphicon-plus-sign"></span>
     </button>-->
-    <button (click)="edit()" class="btn btn-default">edit</button>
-    <button (click)="addToShoppingList()" class="btn btn-default">Add To The List</button>
-    <button (click)="dishService.toggleSelect()" class="btn btn-default">{{dishService.selectFunction}}</button>
+    <ons-button class="">edit</ons-button>
+    <ons-button class="">Add To The List</ons-button>
+    <ons-button (click)="dishService.toggleSelect()" class="">{{dishService.selectFunction}}</ons-button>
     <ul>
-      <li *ngFor="let dish of dishes">
-        <a  [routerLink]="['/detail', dish.name]"><span>{{dish.name}}</span></a>
-        <input type="checkbox" [(ngModel)]="dish.add" (change)="dishService.toggleSelectCheck()"/>
+      <li *ngFor="let dish of dishService.getDishes()">
+        <!--<label class="left">  let i = index
+          <input type="checkbox" [attr.input-id]="'check-' + i" [(value)]="dish.add" (change)="log(dishes)"/>
+        </label>
+        <label [attr.for]="'check-' + i" class="center">-->
+          <!-- (change)="dishService.toggleSelectCheck()" float -->
+          <a [routerLink]="['/detail', dish.name]">{{dish.name}}</a>
+        <!--</label>-->
          <!--<button type="button" class="delete btn btn-default" (click)="delete(dish)">
            <span class="glyphicon glyphicon-minus-sign"></span>
          </button>-->
       </li>
     </ul>
   </div>
+  </ons-page>
   <!--<div *ngIf="selectedDish">
   <h2>
     {{selectedDish.name | uppercase}} is my rezept

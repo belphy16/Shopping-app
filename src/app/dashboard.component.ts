@@ -10,12 +10,11 @@ import {DishService} from './dish.service';
 })
 
 export class DashboardComponent implements OnInit{
-    dishes: Dish [] = [];
+    dishes: Array<Dish>;
 
     constructor(private dishService: DishService) {}
 
     ngOnInit():void {
-        this.dishService.getDishes()
-            .then(dishes => this.dishes = dishes);
+        this.dishes = this.dishService.getDishes();
     }
 }

@@ -1,11 +1,13 @@
-<ons-page>
-<h1>
-  {{title}}
-</h1>
-<nav>
-  <a routerLink="/dishes" routerLinkActive="active">Gerichte</a>
-  <a routerLink="/items" routerLinkActive="active">Einkaufsliste</a>
-  <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-</nav>
-<router-outlet></router-outlet>
-</ons-page>
+  <ons-page>
+    <ons-toolbar>
+    <div class="center">
+        {{title}}
+    </div>
+    <div class="right">
+      <ons-toolbar-button><a routerLink="/dishes" routerLinkActive="active">Gerichte</a></ons-toolbar-button>
+      <ons-toolbar-button><a routerLink="/items" routerLinkActive="active">Einkaufsliste</a></ons-toolbar-button>
+      <ons-toolbar-button><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></ons-toolbar-button>
+    </div>
+    </ons-toolbar>
+    <router-outlet></router-outlet>
+  </ons-page>

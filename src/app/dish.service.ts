@@ -2,93 +2,103 @@ import {Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Dish} from './dish';
+import {Ingredient} from './ingredient';
+import * as _ from 'lodash';
 
 
 @Injectable()
 export class DishService {
     //private dishesUrl = 'api/dishes';
-    private headers = new Headers({'Content-Type': 'application/json'});
-    private dishes = JSON.parse(localStorage.getItem('Dishes'));
+    private headers = new Headers({ 'Content-Type': 'application/json' });
+    private dishes = JSON.parse(localStorage.getItem('Dishes')) || [];
     private _ingredients = [];
     private selectFunction = "Select all";
 
     constructor(private http: Http) {
     }
-    getDishes(): Promise<Array<Dish>> {
-        return Promise.resolve(this.dishes);
+    getDishes(): Array<Dish> {
+        return this.dishes;
     }
-    getDish(name: string): Promise<Dish> {
-        return Promise.resolve(this.dishes.find(dish => name == dish.name));
+    getDish(name: string): Dish {
+        return _.find(this.dishes, x => x.name == name);
     }
-    create(name: string, ingredients: string[]): Promise<Dish> {
-        const dish = new Dish({name: name, ingredients: [...ingredients], add: false});
-        this.dishes.push(dish);
-        localStorage.setItem('Dishes', JSON.stringify(this.dishes)); 
-        return Promise.resolve(dish);
+    private save() {
+        localStorage.setItem('Dishes', JSON.stringify(this.dishes));
     }
-    delete(name: string): Promise<Array<Dish>> {
-        this.dishes = this.dishes.filter(item => item.name != name);
-        localStorage.setItem('Dishes', JSON.stringify(this.dishes)); 
-        return Promise.resolve(this.dishes);
+    add(name: string): Array<Dish> {
+        if (!_.findKey(this.dishes, x => x.name === name)) {
+            const dish = new Dish({ name: name, ingredients: [], add: false });
+            this.dishes.push(dish);
+            this.save();
+        }
+        return this.dishes;
     }
-    deleteIngredient(name: string, ingredient: string): Promise<Array<Dish>> {
-        let _dish = this.dishes.find(item => item.name == name);
-        _dish.ingredients = _dish.ingredients.filter(item => item != ingredient)
-        let index = this.dishes.findIndex(dish => name == dish.name);
-        if (index != -1) {
-            this.dishes[index] = _dish;
-            localStorage.setItem('Dishes', JSON.stringify(this.dishes));            
-        } 
-        return Promise.resolve(this.dishes);
+    delete(name: string): Array<Dish> {
+        let index = _.findIndex(this.dishes, x => x.name == name);
+        if (index > -1) {
+            this.dishes.splice(index, 1);
+            this.save();
+        }
+        return this.dishes;
     }
-    updateDish(name: string, newDish: Dish): Promise<Dish> {
-        let index = this.dishes.findIndex(dish => name == dish.name);
-        if (index != -1) {
-            this.dishes[index] = newDish;
-            localStorage.setItem('Dishes', JSON.stringify(this.dishes));
-        } 
-        return Promise.resolve(newDish);
+    addIngredient(dishName: string, ingredient: string): Array<Dish> {
+        let index = _.findIndex(this.dishes, x => x.name == dishName);
+        if (index > -1) {
+            _.find(this.dishes, x => x.name == dishName).addIngredient(ingredient);
+            this.save();
+        } else {
+            const dish = new Dish({ name: name, ingredients: [], add: false });
+            dish.addIngredient(ingredient);
+            this.dishes.push(dish);
+        }
+        return this.dishes;
     }
-    getIngredients(): string[] {
+    deleteIngredient(dishName: string, ingredient: string): Array<Dish> {
+        let index = _.findIndex(this.dishes, x => x.name == dishName);
+        if (index > -1) {
+            _.find(this.dishes, x => x.name == dishName).deleteIngredient(ingredient);
+            this.save();
+        }
+        return this.dishes;
+    }
+    getSelectedIngredients(): Array<Ingredient> {
         let allIngredients = [];
-        this.dishes
+        _.clone(this.dishes)
             .filter(dish => dish.add)
             .forEach(dish => {
                 allIngredients = allIngredients.concat(dish.ingredients);
             });
         return allIngredients;
     }
-    getIngredientsCounted():Promise<string[]> {
+    getIngredientsCounted(): Array<string> {
         var countedIngredients = {};
-        this.getIngredients().forEach(x => {
-            if(countedIngredients[x]) countedIngredients[x]++;
-            else countedIngredients[x]=1;
+        this.getSelectedIngredients().forEach(x => {
+            if (countedIngredients[x.name]) countedIngredients[x.name]++;
+            else countedIngredients[x.name] = 1;
         });
-        
-        return Promise.resolve(Object.keys(countedIngredients)
-        .sort(function(a,b){
-            let word1 = a.toLowerCase(), word2 = b.toLowerCase();
-            return word1 > word2 ? 1 : word1 < word2 ? -1 : 0;
-        })
-        .map(key => `${countedIngredients[key]}x ${key}`));
+
+        return Object.keys(countedIngredients)
+            .sort(function (a, b) {
+                let word1 = a.toLowerCase(), word2 = b.toLowerCase();
+                return word1 > word2 ? 1 : word1 < word2 ? -1 : 0;
+            })
+            .map(key => `${countedIngredients[key]}x ${key}`);
     }
-    createNewIngredients(ingredient: string): string[] {
-        this._ingredients.push(ingredient);
-        return this._ingredients;
-    }
-    toggleSelect():void {
-        if (this.dishes.some( x => !x.add )) {
+    toggleSelect(): void {
+        let dishes = [...this.dishes];
+        if (dishes.some(x => !x.add)) {
             //select all
             this.selectFunction = "Unselect all";
-            this.dishes.forEach(dish => {dish.add = true;})
+            dishes.forEach(dish => { dish.add = true; })
         } else {
             //unselect all
             this.selectFunction = "Select all";
-            this.dishes.forEach(dish => {dish.add = false;})
+            dishes.forEach(dish => { dish.add = false; })
         }
     }
-    toggleSelectCheck():void {
-        if (this.dishes.some( x => x.add )) {
+    toggleSelectCheck(): void {
+        let dishes = [...this.dishes];
+        if (dishes.some(x => x.add)) {
             //select all
             this.selectFunction = "Unselect all";
         } else {

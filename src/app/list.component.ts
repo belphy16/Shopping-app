@@ -19,9 +19,7 @@ export class ListComponent implements OnInit {
     }
 
     getDishes(): void {
-        this.dishService
-        .getIngredientsCounted()
-        .then(ingredients => this.ingredients = ingredients);
+        this.ingredients = this.dishService.getIngredientsCounted();
     }
 
     ngOnInit(): void {
