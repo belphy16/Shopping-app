@@ -6,10 +6,10 @@ export class Dish{
   ingredients: Array<Ingredient>;
   add: boolean;
 
-  constructor(obj) {
-    this.name = obj.name;
-    this.ingredients = obj.ingredients;
-    this.add = obj.add;
+  constructor(name, ingredients) {
+    this.name = name;
+    this.ingredients = ingredients;
+    this.add = false;
   }
   deleteIngredient(name: string) {
     let index = _.findIndex(this.ingredients, x => x.name == name);

@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 export class DishService {
     //private dishesUrl = 'api/dishes';
     private headers = new Headers({ 'Content-Type': 'application/json' });
-    private dishes = JSON.parse(localStorage.getItem('Dishes')) || [];
+    private dishes = this.load();
     private _ingredients = [];
     private selectFunction = "Select all";
 
@@ -22,12 +22,18 @@ export class DishService {
     getDish(name: string): Dish {
         return _.find(this.dishes, x => x.name == name);
     }
-    private save() {
+    load() {
+        const dishes = JSON.parse(localStorage.getItem('Dishes')) || [];
+        this.dishes = dishes.map(dish => new Dish(dish.name, dish.ingredients.map(ingredient => new Ingredient(ingredient.name))));
+        return this.dishes;
+    }
+    save() {
+        console.log('saved!');
         localStorage.setItem('Dishes', JSON.stringify(this.dishes));
     }
     add(name: string): Array<Dish> {
         if (!_.findKey(this.dishes, x => x.name === name)) {
-            const dish = new Dish({ name: name, ingredients: [], add: false });
+            const dish = new Dish(name, []);
             this.dishes.push(dish);
             this.save();
         }
@@ -44,12 +50,15 @@ export class DishService {
     addIngredient(dishName: string, ingredient: string): Array<Dish> {
         let index = _.findIndex(this.dishes, x => x.name == dishName);
         if (index > -1) {
-            _.find(this.dishes, x => x.name == dishName).addIngredient(ingredient);
+            const res = this.dishes[index];console.log(this.dishes);
+            res.addIngredient(ingredient);
             this.save();
         } else {
-            const dish = new Dish({ name: name, ingredients: [], add: false });
+            const dish = new Dish(dishName, []);
             dish.addIngredient(ingredient);
+            console.log(dish);
             this.dishes.push(dish);
+            this.save();
         }
         return this.dishes;
     }
@@ -72,17 +81,18 @@ export class DishService {
     }
     getIngredientsCounted(): Array<string> {
         var countedIngredients = {};
+        console.log(this.getSelectedIngredients());
         this.getSelectedIngredients().forEach(x => {
             if (countedIngredients[x.name]) countedIngredients[x.name]++;
             else countedIngredients[x.name] = 1;
         });
-
-        return Object.keys(countedIngredients)
+        const res = Object.keys(countedIngredients)
             .sort(function (a, b) {
-                let word1 = a.toLowerCase(), word2 = b.toLowerCase();
+                let word1 = a.toUpperCase(), word2 = b.toUpperCase();
                 return word1 > word2 ? 1 : word1 < word2 ? -1 : 0;
             })
             .map(key => `${countedIngredients[key]}x ${key}`);
+        return res;
     }
     toggleSelect(): void {
         let dishes = [...this.dishes];

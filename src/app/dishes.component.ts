@@ -17,8 +17,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 @Component({
   moduleId: 'module.id',
   selector: 'my-dishes',
-  templateUrl: './dishes.component.html'
-  //styleUrls: ['./rezepte.component.css'],
+  templateUrl: './dishes.component.html',
+  styleUrls: ['./dishes.component.css']
 })
 export class DishesComponent implements OnInit {
   dishes: Array<Dish>;
@@ -27,6 +27,7 @@ export class DishesComponent implements OnInit {
   private added = false;
   private dishName = '';
   private ingredient = '';
+  private _ingredients = [];
 
   constructor(
     private router: Router,
@@ -37,9 +38,11 @@ export class DishesComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getDishes();
+    this._ingredients;
   }
   newDish(): void {
     this.added = !this.added;
+    this._ingredients = [];
   }
   log(x: any): void {
     console.log(x);
@@ -57,13 +60,21 @@ export class DishesComponent implements OnInit {
       console.log(dishName, ingredient);
     if (dishName && ingredient) {
       this.dishService.addIngredient(dishName, ingredient);
-      console.log(this.dishService.getDishes());
     }
   }
   deleteIngredient(dishName: string, ingredient: string): void {
     if (dishName && ingredient) {
       this.dishService.deleteIngredient(dishName, ingredient);
     }
+  }
+  trackByFn(index: number, ingredient: any):string {      
+      return ingredient.name;
+  }
+  saveButton(): void {
+    this._ingredients = [];
+  }
+  showIngredients(ingredient: string): any {
+    this._ingredients.push(ingredient);
   }
   /*
   gotoDetail(): void {

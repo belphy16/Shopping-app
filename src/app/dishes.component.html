@@ -4,22 +4,26 @@
       <ons-button type="button" class="new-dish-add" (click)="newDish()" class="">New Dish</ons-button>
       <div *ngIf="added" class="animate-if">
         <form>
-          <p>
-            <label>Name:</label>
-            <ons-input type="text" (keyup.enter)="newDishName.name=''" placeholder="Type here" [(value)]="dishName" (input)="dishName = $event.target.value"></ons-input>
-            <label>Ingredients:</label>
-            <ons-input type="text" (keyup.enter)="addIngredient(dishName, ingredient)" placeholder="Type here" [(value)]="ingredient" (input)="ingredient = $event.target.value; "></ons-input>
-            <ons-button type="button" (click)="addIngredient(dishName, ingredient)">+</ons-button>
-            <ons-button type="button" (click)="add(dishName)">Save</ons-button>
-          </p>
+          <div>
+            <div>
+              <label class="left">Name:</label>
+              <ons-input modifier="underbar" type="text" placeholder="Type here" (keyup.enter)="newDishName.name=''" placeholder="Type here" [(value)]="dishName" (input)="dishName = $event.target.value; dishService.save()" float></ons-input>
+            </div>
+            <div>
+              <label class="left">Ingredients:</label>
+              <ons-input modifier="underbar" type="text" placeholder="Type here" (keyup.enter)="addIngredient(dishName, ingredient)" [(value)]="ingredient" (input)="ingredient = $event.target.value;" float></ons-input>
+              <ons-button type="button" (click)="addIngredient(dishName, ingredient); showIngredients(ingredient); ingredient='';">+</ons-button>
+            </div>
+          </div>
+        </form>
           <ons-list>
-            <ons-list-item *ngFor="let ingredient of _ingredients">
+            <ons-list-item modifier="tappable" *ngFor="let ingredient of _ingredients">
               <span>{{ingredient}}</span>
             </ons-list-item>
           </ons-list>
-        </form>
+        <ons-button type="button" (click)="saveButton(); dishName=''">Save</ons-button>
       </div>
-  </div> 
+    </div> 
   <div>
    <!-- <input #dishName (keyup.enter)="add(dishName.name)" (blur)="add(dishName.name); dishName.name=''"/>
     <button (click)="add(dishName.name); dishName.name=''" class="btn btn-default">
@@ -28,20 +32,18 @@
     <ons-button class="">edit</ons-button>
     <ons-button class="">Add To The List</ons-button>
     <ons-button (click)="dishService.toggleSelect()" class="">{{dishService.selectFunction}}</ons-button>
-    <ul>
-      <li *ngFor="let dish of dishService.getDishes()">
-        <!--<label class="left">  let i = index
-          <input type="checkbox" [attr.input-id]="'check-' + i" [(value)]="dish.add" (change)="log(dishes)"/>
-        </label>
-        <label [attr.for]="'check-' + i" class="center">-->
-          <!-- (change)="dishService.toggleSelectCheck()" float -->
+    <ons-list>
+      <ons-list-item modifier="tappable" *ngFor="let dish of dishService.getDishes()">
+        <label [attr.for]="'check-' + i" class="left"
+          (change)="dishService.toggleSelectCheck()">
           <a [routerLink]="['/detail', dish.name]">{{dish.name}}</a>
-        <!--</label>-->
-         <!--<button type="button" class="delete btn btn-default" (click)="delete(dish)">
-           <span class="glyphicon glyphicon-minus-sign"></span>
-         </button>-->
-      </li>
-    </ul>
+       </label>
+        <label class="left"  let i = index>
+          <input type="checkbox" [attr.input-id]="'check-' + i" [(ngModel)]="dish.add" />
+        </label>
+        <ons-button modifier="cta" type="button" class="" (click)="delete(dish.name)">-</ons-button>
+      </ons-list-item>
+    </ons-list>
   </div>
   </ons-page>
   <!--<div *ngIf="selectedDish">

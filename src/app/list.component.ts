@@ -13,17 +13,17 @@ import {DishService} from './dish.service';
 })
 
 export class ListComponent implements OnInit {
-    ingredients: String[];
+    ingredients: Array<string>;
 
     constructor(private dishService: DishService) {
     }
 
     getDishes(): void {
         this.ingredients = this.dishService.getIngredientsCounted();
+        console.log(this.ingredients);
     }
 
     ngOnInit(): void {
-        console.log('------------ngOnInit----------------');
         this.getDishes();
     }    
 }
