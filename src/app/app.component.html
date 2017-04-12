@@ -1,23 +1,81 @@
-  <ons-page fixed-style>
-    <ons-toolbar fixed-style>
+<!-- 
+  <ons-page>
+  <ons-toolbar>
       <div class="left">
-        <ons-toolbar-button (click)=slidingMenu.openMenu()>
-          <ons-icon icon="ion-navicon" style="font-size: 32px; width: 1em"></ons-icon>
+        <ons-toolbar-button>
+          <a class="add-new-item" [routerLink]="['./menu']">
+            <ons-icon icon="ion-navicon"></ons-icon>
+          </a>
         </ons-toolbar-button>
       </div>
       <div class="center">
+        <a [routerLink]="['./items']">
         {{title}}
+        </a>
       </div>
       <div class="right">
-        <ons-button modifier="quiet" (click)="myNavigator.pushPage('additem.html')">
+        <ons-button modifier="quiet">
+          <a class="add-new-item" [routerLink]="['./addnewitem']">
             New <ons-icon icon="fa-plus-circle" class=""></ons-icon>
+          </a>
         </ons-button>
       </div>
-     <!-- <div class="right">
-        <ons-toolbar-button><a routerLink="/dishes" routerLinkActive="active">Gerichte</a></ons-toolbar-button>
-        <ons-toolbar-button><a routerLink="/items" routerLinkActive="active">Einkaufsliste</a></ons-toolbar-button>
-        <ons-toolbar-button><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></ons-toolbar-button>
-      </div>-->
     </ons-toolbar>
+
+     <ons-if>
+          <ons-fab position="right bottom">
+            <a class="add-new-item" [routerLink]="['./addnewitem']">
+              <ons-icon icon="md-edit"></ons-icon>
+            </a>
+          </ons-fab>
+        </ons-if>
+
+
     <router-outlet></router-outlet>
-  </ons-page>
+  </ons-page>-->
+<ons-navigator id="navigator" page="slidingmenu.html">
+	</ons-navigator>
+
+  <ons-template id="slidingmenu.html">
+		<ons-page>
+			<ons-sliding-menu id="slidingMenu" swipeable="false" menu-page="menu.html" main-page="disches.component.html"  side="left" type="overlay" max-slide-distance="200px">
+			</ons-sliding-menu>
+		</ons-page>
+	</ons-template>
+
+  <ons-template id="menu.html">
+    <ons-page fixed-style>
+			<ons-toolbar fixed-style>
+				<div class="center">Categories</div>
+				<div class="right" style="margin-top:5px"><ons-button modifier="quiet" ng-click="slidingMenu.closeMenu()"><ons-icon icon="fa-chevron-left" size="25px" fixed-width="false" style="color: #5087c3"></ons-icon></ons-button></div>
+			</ons-toolbar>
+			<ons-list id="categoryList">
+		        <ons-list-item
+		            modifier="tappable" class="list__item__line-height">
+		            <i class="ion-home fa-lg"></i>
+		            &nbsp; All
+					<span class="item-label"></span>
+		        </ons-list-item>
+		        <ons-list-item
+		            modifier="tappable" class="list__item__line-height">
+		            <i class="ion-checkmark"></i>
+		            &nbsp; Completed
+		        </ons-list-item>
+		        <ons-list-header>
+		        	<div style="text-align: center;"><ons-icon icon="ion-minus-round"></ons-icon></div>
+		        </ons-list-header>
+		        <ons-list-item
+		            modifier="tappable" class="list__item__line-height">
+		            <i class="ion-qr-scanner fa-lg"></i>
+		            &nbsp; No category
+            </ons-list-item>
+		    </ons-list>
+
+         <ons-if>
+          <ons-fab position="right bottom" component="button/new-task">
+            <ons-icon icon="md-edit"></ons-icon>
+          </ons-fab>
+        </ons-if>
+
+		</ons-page>
+  </ons-template>

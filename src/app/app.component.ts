@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {AddNewItem} from './addnewitem.component';
+import {MenuComponent} from './menu.component';
 
 @Component({
   moduleId: 'module.id',

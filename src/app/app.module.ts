@@ -15,6 +15,8 @@ import {DishDetailComponent} from './dish-detail.component';
 import {DashboardComponent} from './dashboard.component';
 import {DishService} from './dish.service';
 import {DishSearchComponent} from'./dish-search.component';
+import {AddNewItemComponent} from './addnewitem.component';
+import {MenuComponent} from './menu.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import {DishSearchComponent} from'./dish-search.component';
     DishesComponent,
     ListComponent,
     DishDetailComponent,
-    DishSearchComponent
+    DishSearchComponent,
+    AddNewItemComponent,
+    MenuComponent
   ],
   imports: [
     OnsenModule,
