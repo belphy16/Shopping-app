@@ -1,0 +1,23 @@
+<ons-page>
+    <div *ngIf="dish">
+        <label>name: </label>
+            <!-- <input [(ngModel)]="dish.name"/>-->
+                <ons-input type="text" [(value)]="dish.name" (input)="dish.name = $event.target.value; dishService.save()"></ons-input>
+        <div>
+            <label>Zutaten: </label>
+                <ul>
+                    <li *ngFor="let ingredient of dish.ingredients; trackBy: trackByFn" >
+                        <!--<input [(ngModel)]="ingredient.name"/>-->
+                        <ons-input type="text" [(value)]="ingredient.name" (input)="ingredient.name = $event.target.value;"></ons-input>
+                        <ons-button type="button" class="" (click)="dishService.deleteIngredient(dish.name, ingredient.name)">-</ons-button>
+                    </li>
+                </ul>
+        </div>
+        <!--<input #dishIngredient type="text" (keyup.enter)="dishService.addIngredient(dish.name, dishIngredient.name); dishIngredient.name=''"/>-->
+        <ons-input type="text" placeholder="Type here" [(value)]="newIngredient" (input)="newIngredient = $event.target.value; "></ons-input>
+        <ons-button type="button" class="" (click)="dishService.addIngredient(dish.name, newIngredient); newIngredient=''">
+            +
+        </ons-button>
+        <ons-button (click)="goBack()">Back</ons-button>
+    </div>
+</ons-page>

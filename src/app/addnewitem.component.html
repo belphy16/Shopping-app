@@ -1,0 +1,36 @@
+
+  <ons-page>
+    <ons-toolbar fixed-style>
+        <div class="left"><ons-back-button (click)="goBack()">Back</ons-back-button></div>
+        <div class="center">Create a new dish</div>
+        <div class="right">
+			<ons-button	modifier="quiet" (click)="add(); dishName=''">
+			Add <ons-icon icon="ion-checkmark"></ons-icon>
+			</ons-button>
+        </div>
+    </ons-toolbar>
+	<br/>
+    <div>
+       <!-- <ons-button type="button" class="new-dish-add" (click)="newDish()" class="">New Dish</ons-button>-->
+        <div>
+            <form>
+            <div>
+                <div>
+                    <label class="left">Name:</label>
+                    <ons-input modifier="underbar" type="text" placeholder="Type here" [(value)]="dishName" (input)="dishName = $event.dishName.value; dishService.save()" float></ons-input>
+                </div>
+                <div>
+                    <label class="left">Ingredients:</label>
+                    <ons-input modifier="underbar" type="text" placeholder="Type here" (keyup.enter)="addIngredient(dishName, ingredient)" [(value)]="ingredient" (input)="ingredient = $event.target.value;" float></ons-input>
+                    <ons-button type="button" (click)="addIngredient(dishName, ingredient); showIngredients(ingredient); ingredient='';">+</ons-button>
+                </div>
+            </div>
+            </form>
+            <ons-list>
+                <ons-list-item modifier="tappable" *ngFor="let ingredient of _ingredients">
+                <span>{{ingredient}}</span>
+                </ons-list-item>
+            </ons-list>
+        </div>
+    </div> 
+</ons-page>

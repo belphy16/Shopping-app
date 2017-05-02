@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url('https://fonts.googleapis.com/css?family=Lora');
+@import url('https://fonts.googleapis.com/css?family=Domine');
+ons-page {
+  font-family: 'Domine','Poppins', 'Lora', serif, sans-serif;
+}
+#menuPage {
+  visibility: hidden;
+}
+a:link {
+    text-decoration: none;
+    color: rgba(38, 100, 171, .81);
+}
+a:visited {
+    text-decoration: none;
+    color: rgba(38, 100, 171, .81);
+}
+a:hover {
+    text-decoration: none;
+    color: rgba(38, 100, 171, .81);
+}
+a:active {
+    text-decoration: none;
+    color: rgba(38, 100, 171, .81);
+}
+a .add-new-item {
+  color: rgba(255, 255, 255, 255);
+}

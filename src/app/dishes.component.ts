@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Params,
+  OnsNavigator,
+  OnsenModule,
+  NgModule
+  } from 'angular2-onsenui';
 import { Router } from '@angular/router';
+import {MenuComponent} from './menu.component';
 
 import {Dish} from './dish';
 import {DishService} from './dish.service';
@@ -28,11 +34,17 @@ export class DishesComponent implements OnInit {
   private dishName = '';
   private ingredient = '';
   private _ingredients = [];
+  title = 'Einkaufsliste';
+  menu_page = MenuComponent; 
 
   constructor(
     private router: Router,
-    private dishService: DishService) { }
+    private dishService: DishService,
+    private _navigator: OnsNavigator) { }
 
+  openMenu():void {
+    this._navigator.element.pushPage(MenuComponent);
+  }
   getDishes(): void {
     this.dishes = this.dishService.getDishes();
   }

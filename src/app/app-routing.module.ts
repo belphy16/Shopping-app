@@ -9,7 +9,7 @@ import {AddNewItemComponent} from './addnewitem.component';
 import {MenuComponent} from './menu.component';
 
 const routes: Routes = [
-    {path: '', redirectTo: '/dishes', pathMatch: 'full'},
+    /*{path: '', redirectTo: '/dishes', pathMatch: 'full'},*/
     {path: 'dashboard',  component: DashboardComponent},
     {path: 'dishes',  component: DishesComponent},
     {path: 'items', component: ListComponent},

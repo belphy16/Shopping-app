@@ -17,6 +17,7 @@ import {DishService} from './dish.service';
 import {DishSearchComponent} from'./dish-search.component';
 import {AddNewItemComponent} from './addnewitem.component';
 import {MenuComponent} from './menu.component';
+import {SlidingMenuComponent} from './sliding-menu.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {MenuComponent} from './menu.component';
     DishDetailComponent,
     DishSearchComponent,
     AddNewItemComponent,
-    MenuComponent
+    MenuComponent,
+    SlidingMenuComponent
   ],
   imports: [
     OnsenModule,
@@ -35,6 +37,10 @@ import {MenuComponent} from './menu.component';
     FormsModule,
     AppRoutingModule,
     HttpModule
+  ],
+  entryComponents: [
+    SlidingMenuComponent,
+    MenuComponent
   ],
   providers: [DishService],
   bootstrap: [AppComponent],
