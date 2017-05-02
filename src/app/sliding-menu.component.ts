@@ -14,7 +14,5 @@ import {MenuComponent} from './menu.component';
 
 export class SlidingMenuComponent{
     menu_page = MenuComponent;
-    main_page = DishesComponent;   
-    
-    
+    main_page = DishesComponent;
 }
