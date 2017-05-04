@@ -42,9 +42,6 @@ export class DishesComponent implements OnInit {
     private dishService: DishService,
     private _navigator: OnsNavigator) { }
 
-  openMenu():void {
-    this._navigator.element.pushPage(MenuComponent);
-  }
   getDishes(): void {
     this.dishes = this.dishService.getDishes();
   }

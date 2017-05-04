@@ -20,7 +20,7 @@ export class DishService {
         return this.dishes;
     }
     getDish(name: string): Dish {
-        return _.find(this.dishes, x => x.name == name);
+        return _.find(this.dishes, (x:Dish) => x.name == name);
     }
     load() {
         const dishes = JSON.parse(localStorage.getItem('Dishes')) || [];
@@ -32,7 +32,7 @@ export class DishService {
         localStorage.setItem('Dishes', JSON.stringify(this.dishes));
     }
     add(name: string): Array<Dish> {
-        if (!_.findKey(this.dishes, x => x.name === name)) {
+        if (!_.findKey(this.dishes, (x:Dish) => x.name === name)) {
             const dish = new Dish(name, []);
             this.dishes.push(dish);
             this.save();
@@ -40,7 +40,7 @@ export class DishService {
         return this.dishes;
     }
     delete(name: string): Array<Dish> {
-        let index = _.findIndex(this.dishes, x => x.name == name);
+        let index = _.findIndex(this.dishes, (x:Dish) => x.name == name);
         if (index > -1) {
             this.dishes.splice(index, 1);
             this.save();
@@ -48,7 +48,7 @@ export class DishService {
         return this.dishes;
     }
     addIngredient(dishName: string, ingredient: string): Array<Dish> {
-        let index = _.findIndex(this.dishes, x => x.name == dishName);
+        let index = _.findIndex(this.dishes, (x:Dish) => x.name == dishName);
         if (index > -1) {
             const res = this.dishes[index];console.log(this.dishes);
             res.addIngredient(ingredient);
@@ -63,9 +63,9 @@ export class DishService {
         return this.dishes;
     }
     deleteIngredient(dishName: string, ingredient: string): Array<Dish> {
-        let index = _.findIndex(this.dishes, x => x.name == dishName);
+        let index = _.findIndex(this.dishes, (x:Dish) => x.name == dishName);
         if (index > -1) {
-            _.find(this.dishes, x => x.name == dishName).deleteIngredient(ingredient);
+            _.find(this.dishes, (x:Dish) => x.name == dishName).deleteIngredient(ingredient);
             this.save();
         }
         return this.dishes;

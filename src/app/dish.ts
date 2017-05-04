@@ -1,7 +1,7 @@
 import {Ingredient} from './ingredient';
 import * as _ from 'lodash';
 
-export class Dish{
+export class Dish {
   name: string;
   ingredients: Array<Ingredient>;
   add: boolean;
