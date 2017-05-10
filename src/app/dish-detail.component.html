@@ -1,7 +1,7 @@
 <ons-page>
     <div *ngIf="dish">
         <label>name: </label>
-            <!-- <input [(ngModel)]="dish.name"/>-->
+            <!-- <input [(ngModel)]="dish.name"/> -->
                 <ons-input type="text" [(value)]="dish.name" (input)="dish.name = $event.target.value; dishService.save()"></ons-input>
         <div>
             <label>Zutaten: </label>
