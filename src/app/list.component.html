@@ -1,9 +1,14 @@
 
 <ons-page>
-    <h3>Shopping list</h3>
-    <ul>
-        <li *ngFor="let ingredient of ingredients">
-            <span>{{ingredient}}</span>
-        </li>
-    </ul>
+    <ons-toolbar fixed-style>
+        <div class="left"><ons-back-button (click)="goBack()">Back</ons-back-button></div>
+        <div class="center">Shopping list</div>
+    </ons-toolbar>
+    <div class="content">
+        <ons-list>
+            <ons-list-item modifier="nodivider" tappable *ngFor="let ingredient of ingredients">
+                <span>{{ingredient}}</span>
+            </ons-list-item>
+        </ons-list>
+    </div>
 </ons-page>

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Params,
   OnsNavigator,
   OnsenModule,
-  NgModule
+  NgModule,
+  ViewChild,
+  OnsLazyRepeat,
   } from 'angular2-onsenui';
 import { Router } from '@angular/router';
 import {MenuComponent} from './menu.component';
@@ -37,6 +39,8 @@ export class DishesComponent implements OnInit {
   title = 'Einkaufsliste';
   menu_page = MenuComponent; 
 
+  @ViewChild(OnsLazyRepeat) lazyRepeat;
+  
   constructor(
     private router: Router,
     private dishService: DishService,
@@ -60,10 +64,12 @@ export class DishesComponent implements OnInit {
     name = name.trim();
     if (name) {
       this.dishService.add(name);
-    }
+    };
+    this.lazyRepeat.refresh();
   }
   delete(name: string): void {
     this.dishService.delete(name);
+    this.lazyRepeat.refresh();
   }
   addIngredient(dishName: string, ingredient: string): void {
       console.log(dishName, ingredient);

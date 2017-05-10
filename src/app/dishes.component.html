@@ -28,7 +28,8 @@
     <h2>Meine Rezepte</h2>
     <ons-button (click)="dishService.toggleSelect()" class="">{{dishService.selectFunction}}</ons-button>
     <br/>
-      <ons-list-item modifier="tappable" *ngFor="let dish of dishService.getDishes()">
+    <ons-list>
+      <ons-list-item modifier="tappable"  *onsLazyRepeat="let dish of dishService.getDishes(); let i = index"> <!--*ngFor="let dish of dishService.getDishes()"-->
         <label [attr.for]="'check-' + i" class="left"
           (change)="dishService.toggleSelectCheck()">
           <a [routerLink]="['/detail', dish.name]">{{dish.name}}</a>
@@ -38,6 +39,7 @@
         </label>
         <ons-button modifier="cta" type="button" class="" (click)="delete(dish.name)">-</ons-button>
       </ons-list-item>
+    </ons-list>
   </div>
   <ons-if>
           <ons-fab position="right bottom">
@@ -72,9 +74,3 @@
     </ons-template>
   </ons-page>
   <router-outlet></router-outlet>
-  <!--<div *ngIf="selectedDish">
-  <h2>
-    {{selectedDish.name | uppercase}} is my rezept
-  </h2>
-  <button (click)="gotoDetail()">View Details</button>
-</div>-->
