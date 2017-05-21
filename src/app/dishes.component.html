@@ -1,76 +1,50 @@
 <ons-page>
   <ons-toolbar fixed-style>
     <div class="left">
-        <ons-toolbar-button>
-          <a class="add-new-item" [routerLink]="['./menu']">
+      <ons-toolbar-button type="button">
+          <a [routerLink]="['./menu']">
             <ons-icon icon="ion-navicon"></ons-icon>
           </a>
         </ons-toolbar-button>
       </div>
       <div class="center">
-        <a [routerLink]="['./items']">
-        {{title}}
-        </a>
+          {{title}}
       </div>
       <div class="right">
-        <ons-button modifier="quiet">
+        <ons-button modifier="quiet" type="button">
           <a class="add-new-item" [routerLink]="['./addnewitem']">
-            New <ons-icon icon="fa-plus-circle" class=""></ons-icon>
+            New <ons-icon icon="fa-plus-circle"></ons-icon>
           </a>
         </ons-button>
     </div>
 	</ons-toolbar>
-   <!-- <input #dishName (keyup.enter)="add(dishName.name)" (blur)="add(dishName.name); dishName.name=''"/>
-    <button (click)="add(dishName.name); dishName.name=''" class="btn btn-default">
-      <span class="glyphicon glyphicon-plus-sign"></span>
-    </button>-->
   <div class="content">
-    <h2>Meine Rezepte</h2>
-    <ons-button (click)="dishService.toggleSelect()" class="">{{dishService.selectFunction}}</ons-button>
+    <ons-button (click)="dishService.toggleSelect()" id="selectButton">{{dishService.selectFunction}}</ons-button>
+    <ons-button class="button-link" [routerLink]="['/items']">Shopping list</ons-button>
     <br/>
     <ons-list>
-      <ons-list-item modifier="tappable"  *onsLazyRepeat="let dish of dishService.getDishes(); let i = index"> <!--*ngFor="let dish of dishService.getDishes()"-->
+      <ons-list-item tappable  *ngFor="let dish of dishService.getDishes();">     
         <label [attr.for]="'check-' + i" class="left"
-          (change)="dishService.toggleSelectCheck()">
+          (change)="dishService.toggleSelectCheck()">          
           <a [routerLink]="['/detail', dish.name]">{{dish.name}}</a>
        </label>
         <label class="left"  let i = index>
           <input type="checkbox" [attr.input-id]="'check-' + i" [(ngModel)]="dish.add" />
         </label>
-        <ons-button modifier="cta" type="button" class="" (click)="delete(dish.name)">-</ons-button>
+        <ons-button modifier="quiet" type="button" class="right" (click)="delete(dish.name)">
+          <ons-icon icon="ion-ios-trash-outline"></ons-icon>
+        </ons-button>
       </ons-list-item>
     </ons-list>
   </div>
   <ons-if>
-          <ons-fab position="right bottom">
-            <a class="add-new-item" [routerLink]="['./addnewitem']">
-              <ons-icon icon="md-edit"></ons-icon>
-            </a>
-          </ons-fab>
-        </ons-if>
-
-      <ons-template id="menuPage">
-      <ons-toolbar>
-        <ons-back-button (click)="goBack()">Back</ons-back-button>
-      </ons-toolbar>
-      <ons-list id="default-category-list">
-        <ons-list-header>Default</ons-list-header>
-        <ons-list-item tappable>
-          <div class="left">
-            <ons-input type="radio" name="categoryGroup" input-id="r-all" checked></ons-input>
-          </div>
-          <label class="center" for="r-all">All</label>
-        </ons-list-item>
-        <ons-list-item tappable category-id="">
-          <div class="left">
-            <ons-input type="radio" name="categoryGroup" input-id="r-no"></ons-input>
-          </div>
-          <label class="center" for="r-no">No category</label>
-        </ons-list-item>
-      </ons-list>
-      <ons-list id="custom-category-list">
-        <ons-list-header>Custom categories</ons-list-header>
-      </ons-list>
-    </ons-template>
+    <ons-fab position="right bottom">
+      <div class="add-new-item button-link">
+      <a [routerLink]="['./addnewitem']">
+        <ons-icon icon="md-edit"></ons-icon>
+      </a>
+      </div>
+    </ons-fab>
+  </ons-if>
   </ons-page>
   <router-outlet></router-outlet>

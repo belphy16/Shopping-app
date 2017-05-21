@@ -7,7 +7,8 @@ import {DishService} from './dish.service';
 @Component({
     moduleId: 'module.id',
     selector: 'menu',
-    templateUrl: './menu.component.html'
+    templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
 })
 
 export class MenuComponent implements OnInit{

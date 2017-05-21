@@ -16,6 +16,9 @@ export class DishService {
 
     constructor(private http: Http) {
     }
+    capitalize(name:string): string {
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
     getDishes(): Array<Dish> {
         return this.dishes;
     }
@@ -28,11 +31,11 @@ export class DishService {
         return this.dishes;
     }
     save() {
-        console.log('saved!');
         localStorage.setItem('Dishes', JSON.stringify(this.dishes));
     }
     add(name: string): Array<Dish> {
         if (!_.findKey(this.dishes, (x:Dish) => x.name === name)) {
+            name = this.capitalize(name);
             const dish = new Dish(name, []);
             this.dishes.push(dish);
             this.save();
@@ -48,15 +51,16 @@ export class DishService {
         return this.dishes;
     }
     addIngredient(dishName: string, ingredient: string): Array<Dish> {
+        ingredient = this.capitalize(ingredient); 
+        dishName = this.capitalize(dishName); 
         let index = _.findIndex(this.dishes, (x:Dish) => x.name == dishName);
         if (index > -1) {
-            const res = this.dishes[index];console.log(this.dishes);
+            const res = this.dishes[index];            
             res.addIngredient(ingredient);
             this.save();
         } else {
             const dish = new Dish(dishName, []);
             dish.addIngredient(ingredient);
-            console.log(dish);
             this.dishes.push(dish);
             this.save();
         }
@@ -100,6 +104,7 @@ export class DishService {
             //select all
             this.selectFunction = "Unselect all";
             dishes.forEach(dish => { dish.add = true; })
+
         } else {
             //unselect all
             this.selectFunction = "Select all";

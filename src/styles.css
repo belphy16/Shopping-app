@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css?family=Poppins');
-@import url('https://fonts.googleapis.com/css?family=Lora');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Caption');
 body {
-  font-family: 'Poppins', 'Lora', serif, sans-serif;
+  font-family: 'PT Sans Caption', sans-serif;
+}
+ons-page.page {
+  font-family: 'PT Sans Caption', sans-serif;
+}
+.label-left {
+  vertical-align: bottom;
+  line-height: 32px;
 }

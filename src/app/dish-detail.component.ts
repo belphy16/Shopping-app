@@ -9,11 +9,13 @@ import {DishService} from './dish.service';
 @Component ({
   moduleId: 'module.id',
   selector: 'dish-detail',
-  templateUrl: './dish-detail.component.html'
+  templateUrl: './dish-detail.component.html',
+  styleUrls: ['./dish-detail.component.css']
 })
 
 export class DishDetailComponent implements OnInit{
     dish: Dish;
+    newIngredient:string = "";
 
     constructor(
         private dishService: DishService,
@@ -31,7 +33,7 @@ export class DishDetailComponent implements OnInit{
     goBack(): void {
         this.location.back();
     }
-  trackByFn(index: number, ingredient: any):string {      
-      return ingredient.name;
-  }
+    trackByFn(index: number, ingredient: any):string {      
+        return ingredient.name;
+    }
 }

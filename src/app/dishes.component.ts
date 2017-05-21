@@ -36,7 +36,7 @@ export class DishesComponent implements OnInit {
   private dishName = '';
   private ingredient = '';
   private _ingredients = [];
-  title = 'Einkaufsliste';
+  title = 'All Recipes';
   menu_page = MenuComponent; 
 
   @ViewChild(OnsLazyRepeat) lazyRepeat;
@@ -82,7 +82,7 @@ export class DishesComponent implements OnInit {
       this.dishService.deleteIngredient(dishName, ingredient);
     }
   }
-  trackByFn(index: number, ingredient: any):string {      
+  trackByFn(index: number, ingredient: any):string {     
       return ingredient.name;
   }
   saveButton(): void {

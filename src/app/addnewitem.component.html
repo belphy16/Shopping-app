@@ -1,28 +1,45 @@
 
   <ons-page>
-    <ons-toolbar fixed-style>
-        <div class="left"><ons-back-button (click)="goBack()">Back</ons-back-button></div>
-        <div class="center">Create a new dish</div>
+    <ons-toolbar>
+        <div class="left"><ons-back-button >Back</ons-back-button></div>
+        <div class="center">Create a new recipe</div>
         <div class="right">
-			<ons-button	modifier="quiet" (click)="add(); dishName=''">
+			<ons-button modifier="quiet" (click)="add();">
 			Add <ons-icon icon="ion-checkmark"></ons-icon>
 			</ons-button>
         </div>
     </ons-toolbar>
-	<br/>
     <div>
-       <!-- <ons-button type="button" class="new-dish-add" (click)="newDish()" class="">New Dish</ons-button>-->
-        <div>
-            <form>
+          <ons-list>
+            <ons-list-header>Create a new dish</ons-list-header>
+            <ons-list-item modifier="nodivider">
+            <div class="center">
+                <ons-input type="text" placeholder="Type dish name here" [(value)]="dishName" (input)="dishName = $event.dishName.value; dishService.save()" float></ons-input>
+            </div>
+            </ons-list-item>
+        </ons-list>
+        <ons-list>
+            <ons-list-header>Ingredients</ons-list-header>
+                <ons-list-item modifier="nodivider">
+                <div class="center">
+                    <ons-input type="text" placeholder="Ingredient" (keyup.enter)="addIngredient(dishName)" [(value)]="ingredientInput.value" (input)="ingredientInput = $event.target;" float></ons-input>
+                    <ons-button type="button" (click)="addIngredient(dishName)">+</ons-button>
+                </div>
+            </ons-list-item>
+            <ons-list-item modifier="nodivider" tappable *ngFor="let ingredient of _ingredients">
+            <span>{{ingredient.name}}</span>
+            </ons-list-item>
+        </ons-list>
+<!--<form>
             <div>
                 <div>
-                    <label class="left">Name:</label>
+                    <label class="left label-left">Name:</label>
                     <ons-input modifier="underbar" type="text" placeholder="Type here" [(value)]="dishName" (input)="dishName = $event.dishName.value; dishService.save()" float></ons-input>
                 </div>
                 <div>
-                    <label class="left">Ingredients:</label>
+                    <label class="left label-left">Ingredients:</label>
                     <ons-input modifier="underbar" type="text" placeholder="Type here" (keyup.enter)="addIngredient(dishName, ingredient)" [(value)]="ingredient" (input)="ingredient = $event.target.value;" float></ons-input>
-                    <ons-button type="button" (click)="addIngredient(dishName, ingredient); showIngredients(ingredient); ingredient='';">+</ons-button>
+                    <ons-button type="button" (click)="addIngredient(dishName, ingredient); ingredient='';">+</ons-button>
                 </div>
             </div>
             </form>
@@ -30,7 +47,6 @@
                 <ons-list-item modifier="tappable" *ngFor="let ingredient of _ingredients">
                 <span>{{ingredient}}</span>
                 </ons-list-item>
-            </ons-list>
-        </div>
+            </ons-list>-->
     </div> 
 </ons-page>

@@ -13,8 +13,10 @@ import {DishService} from './dish.service';
 
 export class AddNewItemComponent implements OnInit{
     dishes: Array<Dish>;
+    dishName: string = "";
+    ingredientInput: any;
 
-    private _ingredients = [];
+    _ingredients = [{name: 'one'}, {name: 'two'}];
 
     constructor(
         private dishService: DishService,
@@ -22,21 +24,23 @@ export class AddNewItemComponent implements OnInit{
         ) {}
 
     ngOnInit():void {
-       
+      this.ingredientInput.value = "";
     }
     add(): void {        
         this._ingredients = [];
     }
-  addIngredient(dishName: string, ingredient: string): void {
-      console.log(dishName, ingredient);
-    if (dishName && ingredient) {
-      this.dishService.addIngredient(dishName, ingredient);
+    addIngredient(dishName: string): void {
+      this._ingredients.push({name: this.ingredientInput.value});
+
+      if (dishName && this.ingredientInput.value) {
+        this.dishService.addIngredient(dishName, this.ingredientInput.value);
+        this.ingredientInput.value = '';
+      }
     }
-  }
-  showIngredients(ingredient: string): any {
-    this._ingredients.push(ingredient);
-  }
     goBack(): void {
-        this.location.back();
+      this.location.back();
+    }
+    trackByFn(index: number, ingredient: any):string {     
+        return ingredient.name;
     }
 }

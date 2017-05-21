@@ -1,17 +1,32 @@
 <ons-page>
+    <ons-toolbar>
+        <div class="left"><ons-back-button (click)="goBack()">Back</ons-back-button></div>
+        <div class="center">Recipe detalis</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
     <div *ngIf="dish">
-        <label>name: </label>
-            <!-- <input [(ngModel)]="dish.name"/> -->
-                <ons-input type="text" [(value)]="dish.name" (input)="dish.name = $event.target.value; dishService.save()"></ons-input>
-        <div>
-            <label>Zutaten: </label>
-                <ul>
-                    <li *ngFor="let ingredient of dish.ingredients; trackBy: trackByFn" >
-                        <!--<input [(ngModel)]="ingredient.name"/>-->
-                        <ons-input type="text" [(value)]="ingredient.name" (input)="ingredient.name = $event.target.value;"></ons-input>
-                        <ons-button type="button" class="" (click)="dishService.deleteIngredient(dish.name, ingredient.name)">-</ons-button>
-                    </li>
-                </ul>
+        <!--<ons-list>
+            <ons-list-header>Modify your recipe name</ons-list-header>
+            <ons-list-item modifier="nodivider">
+                <div class="center">
+                    <ons-input type="text" [(value)]="dish.name" (input)="dish.name = $event.target.value; dishService.save()"></ons-input>
+                </div>
+            </ons-list-item>        
+        </ons-list>-->
+                <label class="label-left">name: </label>
+                <!-- <input [(ngModel)]="dish.name"/> -->
+                    <ons-input type="text" [(value)]="dish.name" (input)="dish.name = $event.target.value; dishService.save()"></ons-input>
+            <div>
+                <label>Zutaten: </label>
+                    <ons-list>                    
+                        <ons-list-item *ngFor="let ingredient of dish.ingredients; trackBy: trackByFn" >
+                            <!--<input [(ngModel)]="ingredient.name"/>-->
+                            <ons-input type="text" [(value)]="ingredient.name" (input)="ingredient.name = $event.target.value;"></ons-input>
+                            <ons-button type="button" class="" (click)="dishService.deleteIngredient(dish.name, ingredient.name)">-</ons-button>
+                        </ons-list-item>
+                    </ons-list>
+        
         </div>
         <!--<input #dishIngredient type="text" (keyup.enter)="dishService.addIngredient(dish.name, dishIngredient.name); dishIngredient.name=''"/>-->
         <ons-input type="text" placeholder="Type here" [(value)]="newIngredient" (input)="newIngredient = $event.target.value; "></ons-input>
