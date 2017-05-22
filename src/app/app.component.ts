@@ -4,7 +4,7 @@ import { Params,
   OnsenModule,
   NgModule
   } from 'angular2-onsenui';
-import {AddNewItemComponent} from './addnewitem.component';
+import {AddNewItemComponent} from './add-new-item.component';
 import {MenuComponent} from './menu.component';
 import {DishesComponent} from './dishes.component';
 import {SlidingMenuComponent} from './sliding-menu.component';

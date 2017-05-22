@@ -1,10 +1,11 @@
-<div id="search-component">
-  <h4>Rezept Search</h4>
-  <input #searchBox id="search-box" (keyup)="search(searchBox.name)" />
-  <div>
-    <div *ngFor="let dish of dishes | async"
-         (click)="gotoDetail(dish)" class="search-result" >
-      {{dish.name}}
+<ons-page>
+  <div id="search-component">
+    <h4>Rezept Search</h4>
+    <input #searchBox id="search-box" (keyup)="search(searchBox.name)" />
+    <div>
+      <div *ngFor="let dish of dishes | async" (click)="gotoDetail(dish)" class="search-result">
+        {{dish.name}}
+      </div>
     </div>
   </div>
-</div>
+</ons-page>

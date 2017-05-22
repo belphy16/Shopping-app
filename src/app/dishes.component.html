@@ -2,33 +2,32 @@
   <ons-toolbar fixed-style>
     <div class="left">
       <ons-toolbar-button type="button">
-          <a [routerLink]="['./menu']">
-            <ons-icon icon="ion-navicon"></ons-icon>
-          </a>
-        </ons-toolbar-button>
-      </div>
-      <div class="center">
-          {{title}}
-      </div>
-      <div class="right">
-        <ons-button modifier="quiet" type="button">
-          <a class="add-new-item" [routerLink]="['./addnewitem']">
+        <a [routerLink]="['./menu']">
+          <ons-icon icon="ion-navicon"></ons-icon>
+        </a>
+      </ons-toolbar-button>
+    </div>
+    <div class="center">
+      {{title}}
+    </div>
+    <div class="right">
+      <ons-button modifier="quiet" type="button">
+        <a class="add-new-item" [routerLink]="['/addnewitem']">
             New <ons-icon icon="fa-plus-circle"></ons-icon>
           </a>
-        </ons-button>
+      </ons-button>
     </div>
-	</ons-toolbar>
+  </ons-toolbar>
   <div class="content">
     <ons-button (click)="dishService.toggleSelect()" id="selectButton">{{dishService.selectFunction}}</ons-button>
     <ons-button class="button-link" [routerLink]="['/items']">Shopping list</ons-button>
     <br/>
     <ons-list>
-      <ons-list-item tappable  *ngFor="let dish of dishService.getDishes();">     
-        <label [attr.for]="'check-' + i" class="left"
-          (change)="dishService.toggleSelectCheck()">          
+      <ons-list-item tappable *ngFor="let dish of dishService.getDishes();">
+        <label [attr.for]="'check-' + i" class="left" (change)="dishService.toggleSelectCheck()">          
           <a [routerLink]="['/detail', dish.name]">{{dish.name}}</a>
        </label>
-        <label class="left"  let i = index>
+        <label class="left" let i=i ndex>
           <input type="checkbox" [attr.input-id]="'check-' + i" [(ngModel)]="dish.add" />
         </label>
         <ons-button modifier="quiet" type="button" class="right" (click)="delete(dish.name)">
@@ -39,12 +38,10 @@
   </div>
   <ons-if>
     <ons-fab position="right bottom">
-      <div class="add-new-item button-link">
-      <a [routerLink]="['./addnewitem']">
-        <ons-icon icon="md-edit"></ons-icon>
-      </a>
+      <div class="add-new-item button-link" [routerLink]="['/addnewitem']">
+          <ons-icon icon="md-edit"></ons-icon>
       </div>
     </ons-fab>
   </ons-if>
-  </ons-page>
-  <router-outlet></router-outlet>
+</ons-page>
+<router-outlet></router-outlet>

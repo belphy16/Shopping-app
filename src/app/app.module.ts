@@ -11,24 +11,20 @@ import { AppComponent } from './app.component';
 import {DishesComponent} from './dishes.component';
 import {ListComponent} from './list.component';
 import {DishDetailComponent} from './dish-detail.component';
-import {DashboardComponent} from './dashboard.component';
 import {DishService} from './dish.service';
 import {DishSearchComponent} from'./dish-search.component';
-import {AddNewItemComponent} from './addnewitem.component';
+import {AddNewItemComponent} from './add-new-item.component';
 import {MenuComponent} from './menu.component';
-import {SlidingMenuComponent} from './sliding-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     DishesComponent,
     ListComponent,
     DishDetailComponent,
     DishSearchComponent,
     AddNewItemComponent,
     MenuComponent,
-    SlidingMenuComponent
   ],
   imports: [
     OnsenModule,
@@ -38,7 +34,6 @@ import {SlidingMenuComponent} from './sliding-menu.component';
     HttpModule
   ],
   entryComponents: [
-    SlidingMenuComponent,
     MenuComponent
   ],
   providers: [DishService],
