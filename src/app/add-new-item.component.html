@@ -1,0 +1,37 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-back-button (click)="goBack()">Back</ons-back-button>
+        </div>
+        <div class="center">Create a new recipe</div>
+        <div class="right">
+            <ons-button modifier="quiet" (click)="add(); ingredient =''; dishName=''">
+                Add
+                <ons-icon icon="ion-checkmark"></ons-icon>
+            </ons-button>
+        </div>
+    </ons-toolbar>
+
+     <div>
+        <ons-list>
+            <ons-list-item modifier="nodivider">
+                <div class="center">
+                    <ons-input type="text" placeholder="Dish Name" [(value)]="dishName" (input)="dishName = $event.target.value; dishService.save()" float></ons-input>
+                </div>
+            </ons-list-item>
+        </ons-list>
+        <ons-list>
+            <ons-list-item modifier="nodivider" tappable *ngFor="let ingredient of _ingredients">
+                {{ingredient}}
+            </ons-list-item>
+            <ons-list-item modifier="nodivider">
+                <div class="center">
+                    <ons-input type="text" placeholder="Ingredient"  [(value)]="ingredient" (keyup.enter)="addIngredient(dishName, ingredient)" (input)="ingredient = $event.target.value;" float></ons-input>
+                        <ons-button modifier="quiet" type="button" (click)="addIngredient(dishName, ingredient); ingredient ='';">
+                            <i class="zmdi zmdi-plus zmdi-hc-2x"></i>
+                        </ons-button>
+                </div>
+            </ons-list-item>
+        </ons-list>
+    </div>
+</ons-page>
