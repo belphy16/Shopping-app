@@ -7,7 +7,6 @@ import { Params,
 import {AddNewItemComponent} from './add-new-item.component';
 import {MenuComponent} from './menu.component';
 import {DishesComponent} from './dishes.component';
-import {SlidingMenuComponent} from './sliding-menu.component';
 
 @Component({
   moduleId: 'module.id',

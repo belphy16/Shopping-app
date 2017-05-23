@@ -23,8 +23,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
-  moduleId: 'module.id',
-  selector: 'my-dishes',
+  selector: 'dishes-page',
   templateUrl: './dishes.component.html',
   styleUrls: ['./dishes.component.css']
 })
